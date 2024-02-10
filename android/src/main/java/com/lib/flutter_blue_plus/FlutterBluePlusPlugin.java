@@ -198,6 +198,13 @@ public class FlutterBluePlusPlugin implements
 
         pluginBinding = null;
 
+        List<BluetoothDevice> devices = mBluetoothManager.getConnectedDevices(BluetoothProfile.GATT);
+        for (BluetoothDevice d : devices) {
+            if(mConnectedDevices.containsKey(d.getAddress())) {
+                mConnectedDevices.get(d.getAddress()).close();
+            }
+        }
+
         // stop scanning
         if (mBluetoothAdapter != null && mIsScanning) {
             BluetoothLeScanner scanner = mBluetoothAdapter.getBluetoothLeScanner();
